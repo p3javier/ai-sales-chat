@@ -26,7 +26,7 @@ const ChatInput: React.FC = () => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex grid-cols-4 grid-rows-1 gap-2"
+      className="flex grid-cols-4 grid-rows-1 gap-2 mx-4"
     >
       <Input
         className="grid col-span-3"
