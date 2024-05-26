@@ -12,16 +12,16 @@ const ChatMessage: React.FC<ChatMessageProps> = ({
   return (
     <div
       className={cn(
-        "grid",
-        variant === EVariant.sent ? "justify-items-end" : "justify-items-start"
+        "grid grid-cols-3",
+        variant === EVariant.sent ? "justify-items-end " : "justify-items-start"
       )}
     >
       <div
         className={cn(
-          " p-2 rounded-md",
+          "col-span-2 p-2 rounded-md",
           variant === EVariant.sent
-            ? "bg-slate-700 text-slate-50"
-            : "bg-slate-400"
+            ? "col-start-2 bg-slate-700 dark:bg-slate-500 text-slate-50"
+            : "bg-slate-200 dark:bg-slate-600 dark:text-slate-300"
         )}
       >
         {sender ?? <div className="sender">{sender}</div>}
