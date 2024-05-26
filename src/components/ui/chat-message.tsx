@@ -1,7 +1,6 @@
 import React from "react";
-//import { cn } from "@/lib/utils";
-import { ChatMessageProps, EVariant } from "@/lib";
-import { cn } from "@/lib/utils";
+import { ChatMessageProps, EVariant, cn, setTime } from "@/lib";
+import { Button } from "@/components/ui/button";
 
 const ChatMessage: React.FC<ChatMessageProps> = ({
   message,
@@ -9,6 +8,10 @@ const ChatMessage: React.FC<ChatMessageProps> = ({
   timestamp,
   variant = EVariant.sent,
 }) => {
+  const button = {
+    label: "Jump to video",
+    videoTime: 4,
+  };
   return (
     <div
       className={cn(
@@ -27,6 +30,11 @@ const ChatMessage: React.FC<ChatMessageProps> = ({
         {sender ?? <div className="sender">{sender}</div>}
         <div className="text-left">{message}</div>
         {timestamp ?? <div className="timestamp">{timestamp}</div>}
+        {button && (
+          <Button onClick={() => setTime(button.videoTime)} role="link">
+            {button.label}
+          </Button>
+        )}
       </div>
     </div>
   );
