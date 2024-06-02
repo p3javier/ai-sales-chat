@@ -1,6 +1,6 @@
 import React from "react";
-import { ChatMessageProps, EVariant, cn, setTime } from "@/lib";
-import { Button } from "@/components/ui/button";
+import { ChatMessageProps, EVariant, cn } from "@/lib";
+import { SpinnerLoader } from "@/components/ui/spinner-loader";
 
 const ChatMessage: React.FC<ChatMessageProps> = ({
   message,
@@ -8,10 +8,6 @@ const ChatMessage: React.FC<ChatMessageProps> = ({
   timestamp,
   variant = EVariant.sent,
 }) => {
-  const button = {
-    label: "Jump to video",
-    videoTime: 4,
-  };
   return (
     <div
       className={cn(
@@ -21,20 +17,19 @@ const ChatMessage: React.FC<ChatMessageProps> = ({
     >
       <div
         className={cn(
-          "col-span-2 p-2 rounded-md",
+          "p-2 rounded-md",
           variant === EVariant.sent
-            ? "col-start-2 bg-slate-700 dark:bg-slate-500 text-slate-50"
-            : "bg-slate-200 dark:bg-slate-600 dark:text-slate-300"
+            ? "col-span-2 col-start-2 bg-slate-700 dark:bg-slate-500 text-slate-50"
+            : "col-span-3 bg-slate-200 dark:bg-slate-600 dark:text-slate-300"
         )}
       >
         {sender ?? <div className="sender">{sender}</div>}
-        <div className="text-left">{message}</div>
-        {timestamp ?? <div className="timestamp">{timestamp}</div>}
-        {button && (
-          <Button onClick={() => setTime(button.videoTime)} role="link">
-            {button.label}
-          </Button>
+        {variant === EVariant.loading ? (
+          <SpinnerLoader />
+        ) : (
+          <div className="text-left">{message}</div>
         )}
+        {timestamp ?? <div className="timestamp">{timestamp}</div>}
       </div>
     </div>
   );

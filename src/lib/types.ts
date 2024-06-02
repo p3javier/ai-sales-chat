@@ -5,9 +5,11 @@ type ButtonProps = {
   videoTime: number;
 };
 export interface ChatMessageProps {
-  message: string;
+  message?: JSX.Element; // TODO: Check this link to improve this type: https://www.typescriptlang.org/docs/handbook/2/conditional-types.html
   sender?: string;
   timestamp?: string;
-  variant?: EVariant;
+  variant: EVariant;
   button?: ButtonProps;
 }
+
+export type Timestamp = number;

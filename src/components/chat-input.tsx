@@ -1,11 +1,55 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useChatStore } from "@/lib";
+import { MessageContent } from "./ui/message-content";
+import { EVariant, useChatStore, getSvidFromBrowserURL } from "@/lib";
+import { useSocket } from "@/lib/hooks";
+import { useToast } from "@/components/ui/use-toast";
 
 const ChatInput: React.FC = () => {
+  const socket = useSocket();
   const [message, setMessage] = useState("");
   const addMessage = useChatStore((state) => state.addMessage);
+  const removeLastMessage = useChatStore((state) => state.removeLastMessage);
+  const { toast } = useToast();
+
+  useEffect(() => {
+    if (socket) {
+      socket.on("message", (message) => {
+        console.log("Received message from server: ", message);
+        const messageElement = <MessageContent messageInput={message} />;
+        removeLastMessage();
+        addMessage({ message: messageElement, variant: EVariant.received });
+      });
+
+      return () => {
+        socket.off("message");
+      };
+    }
+  }, [socket]);
+
+  type SendMessageResponse = {
+    status: "success" | "error";
+  };
+  const sendMessage = (message: string): SendMessageResponse => {
+    if (!socket) {
+      console.error("Socket.io is not connected");
+      toast({
+        variant: "destructive",
+        title: "Something went wrong",
+        description: "Socket.io is not connected",
+      });
+      return { status: "error" };
+    }
+    const svid = getSvidFromBrowserURL();
+    const messageObject = {
+      svid,
+      message,
+    };
+
+    socket.emit("message", JSON.stringify(messageObject));
+    return { status: "success" };
+  };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setMessage(event.target.value);
@@ -13,7 +57,12 @@ const ChatInput: React.FC = () => {
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    addMessage({ message });
+    const { status } = sendMessage(message);
+    if (status === "error") {
+      return;
+    }
+    addMessage({ message: <>{message}</>, variant: EVariant.sent });
+    addMessage({ variant: EVariant.loading });
     setMessage("");
   };
 
