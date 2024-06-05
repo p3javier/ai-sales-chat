@@ -6,6 +6,10 @@ import { EVariant, useChatStore, getSvidFromBrowserURL } from "@/lib";
 import { useSocket } from "@/lib/hooks";
 import { useToast } from "@/components/ui/use-toast";
 
+type MessageError = {
+  error: string;
+};
+
 const ChatInput: React.FC = () => {
   const socket = useSocket();
   const [message, setMessage] = useState("");
@@ -15,8 +19,17 @@ const ChatInput: React.FC = () => {
 
   useEffect(() => {
     if (socket) {
-      socket.on("message", (message) => {
+      socket.on("message", (message: string | MessageError) => {
         console.log("Received message from server: ", message);
+        if (typeof message === "object") {
+          removeLastMessage();
+          toast({
+            variant: "destructive",
+            title: "Something went wrong",
+            description: message.error,
+          });
+          return;
+        }
         const messageElement = <MessageContent messageInput={message} />;
         removeLastMessage();
         addMessage({ message: messageElement, variant: EVariant.received });
