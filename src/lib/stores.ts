@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { ChatMessageProps } from "./types";
-// import { persist, createJSONStorage } from 'zustand/middleware'
+import { persist, createJSONStorage } from "zustand/middleware";
 // TODO: Add a middleware to persist the store in the local storage
 
 type ChatState = {
@@ -10,7 +10,7 @@ type ChatState = {
   removeLastMessage: () => void;
 };
 
-export const useChatStore = create<ChatState>((set) => ({
+export const useChatStore = create<ChatState>()((set) => ({
   messages: [],
   addMessage: (message) =>
     set((state) => ({ messages: [...state.messages, message] })),
@@ -28,3 +28,33 @@ export const useVideoStore = create((set) => ({
   setVideoUrl: (url: string) => set({ videoUrl: url }),
 }));
 */
+
+type JourneyState = {
+  journeyState: {
+    introCompleted?: boolean;
+    initialFormCompleted?: boolean;
+  };
+  setJourneyState: (journeyState: JourneyState["journeyState"]) => void;
+};
+
+export const useJourneyStateStore = create<JourneyState>()(
+  persist(
+    (set) => ({
+      journeyState: {
+        introCompleted: false,
+        initialFormCompleted: false,
+      },
+      setJourneyState: (journeyState) =>
+        set((state) => ({
+          journeyState: {
+            ...state.journeyState,
+            ...journeyState,
+          },
+        })),
+    }),
+    {
+      name: "journey-sate",
+      storage: createJSONStorage(() => sessionStorage),
+    }
+  )
+);

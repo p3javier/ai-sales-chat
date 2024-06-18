@@ -1,0 +1,14 @@
+.sto {
+  fill: #fff;
+}
+
+.travelperk-logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  padding: 1vh 0.5rem;
+  text-align: center;
+  height: 28vh;
+  fill: #fff;
+}

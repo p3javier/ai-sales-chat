@@ -10,7 +10,11 @@ type MessageError = {
   error: string;
 };
 
-const ChatInput: React.FC = () => {
+interface ChatInputProps {
+  disabled?: boolean;
+}
+
+const ChatInput: React.FC<ChatInputProps> = ({ disabled = false }) => {
   const socket = useSocket();
   const [message, setMessage] = useState("");
   const addMessage = useChatStore((state) => state.addMessage);
@@ -96,8 +100,9 @@ const ChatInput: React.FC = () => {
         value={message}
         onChange={handleChange}
         onKeyDown={handleKeyDown}
+        disabled={disabled}
       />
-      <Button className="grid" type="submit">
+      <Button className="grid" type="submit" disabled={disabled}>
         Send
       </Button>
     </form>
