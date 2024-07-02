@@ -1,12 +1,9 @@
 import ChatApp from "./ChatApp.tsx";
 import Intro from "./Intro.tsx";
-import { useJourneyStateStore } from "@/lib";
+import { hasSvidAndTokenParams } from "@/lib";
 
 function App() {
-  const { introCompleted } = useJourneyStateStore(
-    (state) => state.journeyState
-  );
-  return <>{introCompleted ? <ChatApp /> : <Intro />}</>;
+  return <>{hasSvidAndTokenParams() ? <ChatApp /> : <Intro />}</>;
 }
 
 export default App;

@@ -94,3 +94,8 @@ export const getSvidFromBrowserURL = () => {
   const url = new URL(window.location.href);
   return url.searchParams.get("svid");
 };
+
+export const hasSvidAndTokenParams = () => {
+  const searchParams = new URLSearchParams(window.location.search);
+  return searchParams.has("svid") && searchParams.has("authToken");
+};
