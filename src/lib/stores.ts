@@ -33,6 +33,7 @@ type JourneyState = {
   journeyState: {
     introCompleted?: boolean;
     initialFormCompleted?: boolean;
+    demoCompleted?: boolean;
   };
   setJourneyState: (journeyState: JourneyState["journeyState"]) => void;
 };
@@ -43,6 +44,7 @@ export const useJourneyStateStore = create<JourneyState>()(
       journeyState: {
         introCompleted: false,
         initialFormCompleted: false,
+        demoCompleted: false,
       },
       setJourneyState: (journeyState) =>
         set((state) => ({

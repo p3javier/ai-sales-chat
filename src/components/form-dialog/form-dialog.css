@@ -1,0 +1,3 @@
+.tally-popup {
+  transform: translate(0px, calc(-100vh / 2));
+}

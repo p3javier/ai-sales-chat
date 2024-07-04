@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useJourneyStateStore } from "@/lib";
+import "./form-dialog.css";
 
 declare const Tally: any; // Declare Tally variable
 
