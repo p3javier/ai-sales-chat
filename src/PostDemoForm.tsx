@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import "./PostDemoForm.css";
-import { ModeToggle } from "@/components/mode-toggle";
 import { TypographyH1 } from "./components/ui/typography-h1";
 
 declare const Tally: any; // Declare Tally variable
