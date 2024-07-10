@@ -18,7 +18,7 @@ export const TimestampLink: React.FC<TimestampLinkProps> = ({
 
   return (
     <span
-      className="rounded-md p-2 mb-2 transition-all cursor-pointer font-bold duration-100 dark:hover:duration-200 underline hover:bg-slate-50 dark:hover:bg-slate-400 dark:hover:text-slate-50"
+      className="rounded-md p-2 mb-2 transition-all cursor-pointer font-bold duration-100 dark:hover:duration-200 underline hover:bg-slate-200 dark:hover:bg-slate-400 dark:hover:text-slate-50"
       role="button"
       tabIndex={0}
       onClick={() => setTime(timeStampInSeconds)}
