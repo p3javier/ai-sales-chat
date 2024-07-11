@@ -1,29 +1,48 @@
-import { Button } from "@/components/ui/button";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
 import React from "react";
+import { Button } from "@/components/ui/button";
 import { TimestampLink } from "@/components/ui/timestamp-link";
+import { convertIntegerToTime } from "@/lib";
 
 interface VideoSegmentsProps {
   segments: { timestamp: number; label: string }[];
 }
+
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+
 const VideoSegments: React.FC<VideoSegmentsProps> = ({ segments }) => {
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOnTimestamp = () => {
+    setOpen(false);
+  };
+
   return (
-    <Popover>
-      <PopoverTrigger asChild>
-        <Button size="lg" className=" text-lg">
-          Ver secciones del vídeo
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent className="w-120">
-        <div className="grid gap-4">
-          <div>
+    <div className="grid grid-cols-3 gap-2">
+      <Sheet open={open} onOpenChange={setOpen}>
+        <SheetTrigger asChild>
+          <Button size="lg" className=" text-lg">
+            Ver secciones del vídeo
+          </Button>
+        </SheetTrigger>
+        <SheetContent side="left">
+          <SheetHeader>
+            <SheetTitle>Secciones del video</SheetTitle>
+          </SheetHeader>
+          <div className="grid gap-4 py-4">
             <ul>
               {segments.map(({ timestamp, label }) => (
-                <li key={label} className="my-4">
+                <li
+                  key={label}
+                  className="flex flex-row items-center"
+                  onClick={handleClickOnTimestamp}
+                >
+                  <div>{convertIntegerToTime(timestamp)}</div>
                   <TimestampLink
                     timestamp={label}
                     timeStampInSeconds={timestamp}
@@ -32,9 +51,9 @@ const VideoSegments: React.FC<VideoSegmentsProps> = ({ segments }) => {
               ))}
             </ul>
           </div>
-        </div>
-      </PopoverContent>
-    </Popover>
+        </SheetContent>
+      </Sheet>
+    </div>
   );
 };
 

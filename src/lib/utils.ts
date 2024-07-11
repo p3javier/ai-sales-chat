@@ -99,3 +99,13 @@ export const hasSvidAndTokenParams = () => {
   const searchParams = new URLSearchParams(window.location.search);
   return searchParams.has("svid") && searchParams.has("authToken");
 };
+
+export const convertIntegerToTime = (time: number) => {
+  const hours = Math.floor(time / 3600);
+  const minutes = Math.floor((time % 3600) / 60);
+  const minutesString = minutes < 10 ? `0${minutes}` : `${minutes}`;
+  const seconds = Math.floor(time % 60);
+  const secondsString = seconds < 10 ? `0${seconds}` : `${seconds}`;
+  const minutesAndSeconds = `${minutesString}:${secondsString}`;
+  return hours ? `${hours}:${minutesAndSeconds}` : minutesAndSeconds;
+};
