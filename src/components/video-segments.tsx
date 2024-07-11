@@ -2,6 +2,7 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { TimestampLink } from "@/components/ui/timestamp-link";
 import { convertIntegerToTime } from "@/lib";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface VideoSegmentsProps {
   segments: { timestamp: number; label: string }[];
@@ -30,27 +31,32 @@ const VideoSegments: React.FC<VideoSegmentsProps> = ({ segments }) => {
             Ver secciones del vídeo
           </Button>
         </SheetTrigger>
-        <SheetContent side="left">
+        <SheetContent
+          side="left"
+          className="bg-gradient-to-b from-transparent from-80% to-slate-400"
+        >
           <SheetHeader>
             <SheetTitle>Secciones del video</SheetTitle>
           </SheetHeader>
-          <div className="grid gap-4 py-4">
-            <ul>
-              {segments.map(({ timestamp, label }) => (
-                <li
-                  key={label}
-                  className="flex flex-row items-center"
-                  onClick={handleClickOnTimestamp}
-                >
-                  <div>{convertIntegerToTime(timestamp)}</div>
-                  <TimestampLink
-                    timestamp={label}
-                    timeStampInSeconds={timestamp}
-                  />
-                </li>
-              ))}
-            </ul>
-          </div>
+          <ScrollArea className="h-full">
+            <div className="grid gap-4 p-4">
+              <ul>
+                {segments.map(({ timestamp, label }) => (
+                  <li
+                    key={label}
+                    className="flex flex-row items-center"
+                    onClick={handleClickOnTimestamp}
+                  >
+                    <div>{convertIntegerToTime(timestamp)}</div>
+                    <TimestampLink
+                      timestamp={label}
+                      timeStampInSeconds={timestamp}
+                    />
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </ScrollArea>
         </SheetContent>
       </Sheet>
     </div>
