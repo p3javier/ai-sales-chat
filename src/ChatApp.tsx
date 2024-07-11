@@ -121,7 +121,7 @@ const ChatApp = () => {
           videoUrl={videoUrl}
           error={videoError}
         />
-        <div className="row-span-1 overflow-scroll">
+        <div className="row-span-1">
           <VideoSegments segments={videoSegments} />
         </div>
       </div>
